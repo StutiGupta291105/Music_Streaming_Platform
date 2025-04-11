@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Playlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Create a New Playlist</h2>
+    <form method="POST">
+        <label for="playlist_name">Playlist Name:</label>
+        <input type="text" name="playlist_name" required>
+        <button type="submit">Create Playlist</button>
+    </form>
+    <a href="{{ url_for('dashboard.user_dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

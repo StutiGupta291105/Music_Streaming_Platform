@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload Song</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Upload a New Song</h2>
+    <form action="{{ url_for('dashboard.upload_songs') }}" method="POST" enctype="multipart/form-data">
+        <label for="title">Song Title:</label>
+        <input type="text" name="title" required><br>
+
+        <label>Artist:</label><br>
+        <select name="artist_id" required>
+            {% for artist in artists %}
+            <option value="{{ artist[0] }}">{{ artist[1] }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="album">Album:</label>
+        <input type="text" name="album"><br>
+
+        <label for="genre">Genre:</label>
+        <input type="text" name="genre"><br>
+
+        <label for="duration">Duration (in seconds):</label>
+        <input type="number" name="duration" required><br>
+
+        <label for="release_date">Release Date:</label>
+        <input type="date" name="release_date"><br>
+
+        <label for="file">Upload Song File:</label>
+        <input type="file" name="file_path" accept=".mp3, .wav, .ogg" required><br>
+
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
+
+

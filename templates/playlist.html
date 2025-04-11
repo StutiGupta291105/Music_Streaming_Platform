@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Playlist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Your Liked Songs</h2>
+
+    {% if songs %}
+        <ul>
+            {% for song in songs %}
+                <li>
+                    <strong>{{ song[1] }}</strong> by {{ song[8] }}<br>
+                    Album: {{ song[3] }} | Genre: {{ song[4] }} | Duration: {{ song[5] }} sec<br>
+                    Release Date: {{ song[6] }}<br>
+
+                    {% if song[7] %}
+                        {% set file_relative_path = song[7].split('static/')[1] %}
+                        <audio controls>
+                            <source src="{{ url_for('static', filename=file_relative_path) }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    {% else %}
+                        <p><em>No audio available</em></p>
+                    {% endif %}
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't liked any songs yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard.user_dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

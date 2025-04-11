@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Playlists</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_styles.css') }}">
+</head>
+<body>
+    <!-- Sidebar: Display all playlists -->
+    <input type="checkbox" id="sidebar-toggle">
+    <div class="sidebar">
+        <div class="logo">
+            <span class="full-logo">MusicVerse</span>
+            <span class="icon-logo">♬</span>
+        </div>
+        <label for="sidebar-toggle" class="toggle-btn">&#9776;</label>
+    
+        <!-- Playlist Icons -->
+        <ul class="playlist-icons">
+            {% for playlist in playlists_with_songs %}
+            <li>
+                <form method="GET" action="{{ url_for('dashboard.view_single_playlist') }}">
+                    <input type="hidden" name="playlist_id" value="{{ playlist[0] }}">
+                    <button type="submit" title="{{ playlist[2] }}">
+                        ♪♪♫
+                    </button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    
+        <!-- Create Playlist -->
+        <h2>Create Playlist</h2>
+        <div class="create-playlist">
+            <form action="{{ url_for('dashboard.create_playlist') }}" method="POST">
+                <input type="text" name="playlist_name" placeholder="New Playlist" required>
+                <button type="submit">+</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h2>Your Playlists</h2>
+
+        <!-- Display Playlist Songs -->
+        <div class="playlist-stack">
+            <h3>Your Playlists</h3>
+            <ul>
+            {% for playlist, songs in playlists_with_songs %}
+                <li class="playlist-item">
+                    <h3>{{ playlist[2] }}</h3> <!-- Playlist Name -->
+                    <ul>
+                        {% for song in songs %}
+                            <li>{{ song[0] }} by {{ song[1] }} (Album: {{ song[2] }})</li>
+                        {% endfor %}
+                    </ul>
+                    <!-- Delete Playlist Button -->
+                    <form action="{{ url_for('dashboard.delete_playlist', playlist_id=playlist[0]) }}" method="POST">
+                        <button type="submit" class="delete-btn">Delete Playlist</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+
+        <!-- Back to Dashboard -->
+        <a href="{{ url_for('dashboard.user_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+
+</body>
+</html>
+

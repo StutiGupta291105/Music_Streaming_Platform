@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Play Song</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='user_styles.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">MusicApp</div>
+        <ul>
+            <li><a href="{{ url_for('dashboard.user_dashboard') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard.view_playlists') }}">Your Playlists</a></li>
+            <li><a href="{{ url_for('dashboard.liked_songs') }}">Liked Songs</a></li>
+            <li><a href="{{ url_for('dashboard.user_profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <h2>Now Playing: {{ song[1] }} by {{ song[8] }}</h2> <!-- Song Name and Artist -->
+        
+        {% if song[7] %}
+            {% set clean_path = song[7].replace('static/', '') %}
+            <audio controls autoplay>
+                <source src="{{ url_for('static', filename=clean_path) }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        {% else %}
+            <p><em>No audio available</em></p>
+        {% endif %}
+
+        <a href="{{ url_for('dashboard.user_dashboard') }}" class="back-btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

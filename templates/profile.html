@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-container {
+            margin-top: 50px;
+            background-color: #1e1e1e;
+            border-radius: 15px;
+            padding: 40px;
+            width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+
+        .profile-icon {
+            width: 100px;
+            height: 100px;
+            background-color: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+
+        .profile-info p {
+            margin: 8px 0;
+        }
+
+        .form-section {
+            margin-top: 30px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 5px;
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+
+        form button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #1db954;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #1db954;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            color: #1db954;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-icon">👤</div>
+            <div class="profile-info">
+                <h2>User Profile</h2>
+                {% if message %}
+                    <p class="message">{{ message }}</p>
+                {% endif %}
+                <p><strong>Name:</strong> {{ user[0] }}</p>
+                <p><strong>Email:</strong> {{ user[1] }}</p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Change Password</h3>
+            <form method="POST">
+                <label for="new_password">New Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+
+        <a href="{{ url_for('dashboard.user_dashboard') }}" class="back-link">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

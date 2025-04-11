@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Liked Songs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='userstyles.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <div class="logo">
+          <span class="app-name">🎵 MusicVerse</span>
+      </div>
+  
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+          <h2><a href="{{ url_for('dashboard.user_dashboard') }}"><i class="fa fa-home"></i> Home</a></h2>
+          <h2><a href="{{ url_for('dashboard.liked_songs') }}"><i class="fa fa-heart"></i> Liked Songs</a></h2>
+      </ul>
+    </div>
+      <div class="main">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="search-box">
+                <form method="GET" action="{{ url_for('dashboard.user_dashboard') }}">
+                    <input type="text" name="query" placeholder="Search Music..." value="{{ request.args.get('query', '') }}">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            <a href="{{ url_for('dashboard.user_profile') }}">
+                <img src="{{ url_for('static', filename='images/artist.jpeg') }}" alt="Profile" class="profile-icon">
+            </a>
+        </div>
+
+        <h3>Liked Songs</h3>
+        <div class="song-grid">
+            {% for song in liked_songs %}
+            <div class="song-card"
+            data-title="{{ song[1] }}"
+            data-artist="{{ song[8] or 'Unknown Artist' }}"
+            data-src="{{ url_for('static', filename=song[7].replace('static/', '')) if song[7] else '' }}">
+            <p>{{ song[1] }}</p>
+            <!-- Like/Unlike Button -->
+             {% if song[0] in liked_song_ids %}
+             <form action="{{ url_for('dashboard.unlike_song', song_id=song[0]) }}" method="POST" class="like-form">
+              <button type="submit" title="Unlike" class="like-btn">❤</button>
+            </form>
+            {% else %}
+            <form action="{{ url_for('dashboard.like_song', song_id=song[0]) }}" method="POST" class="like-form">
+              <button type="submit" title="Like" class="like-btn">♡</button>
+            </form>
+            {% endif %}
+            <button class="play-btn">▶</button>  
+          </div>
+
+            {% endfor %}
+        </div>
+    </div>
+        
+
+        
+    </div>
+</div>
+
+<!-- Bottom Music Player -->
+<div class="music-player">
+  <audio id="audio-player" controls style="display: none;"></audio>
+
+  <div class="track-info">
+      <div>
+          <p id="player-title">Select a song</p>
+          <small id="player-artist">Artist</small>
+      </div>
+  </div>
+
+  <div class="controls">
+      <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+  </div>
+
+  <div class="volume">
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+  </div>
+  <div class="progress-container">
+    <span id="current-time">0:00</span>
+    <input type="range" id="progress-bar" value="0" min="0" max="100">
+    <span id="total-duration">0:00</span>
+</div>
+</div>
+    <!-- Main Content -->
+    
+
+
+</body>
+</html>
+
+
+
