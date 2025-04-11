@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Artist</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h2>Add Artist</h2>
+    
+    <form method="POST" action="{{ url_for('dashboard.add_artist') }}">
+        <label for="artist_name">Artist Name</label><br>
+        <input type="text" id="artist_name" name="artist_name" required><br><br>
+        
+        <label for="genre">Genre</label><br>
+        <input type="text" id="genre" name="genre" required><br><br>
+        
+        <label for="country">Country</label><br>
+        <input type="text" id="country" name="country" required><br><br>
+
+        <input type="submit" value="Add Artist">
+    </form>
+    
+    <a href="{{ url_for('dashboard.show_dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
